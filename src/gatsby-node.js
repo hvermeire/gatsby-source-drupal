@@ -84,6 +84,12 @@ exports.sourceNodes = async (
     })
   }
 
+  if(translation && !languageConfig.enabledLanguages.length) {
+    reporter.warn(
+      `The translation option is enabled but no enabled languages were retrieved from Drupal. Make sure your basicAuth credentials in the Gatsby config file are populated with a user that has the "administer languages" permission.`,
+    );
+  }
+
   setPluginStatus({ languageConfig })
 
   if (webhookBody && Object.keys(webhookBody).length) {
