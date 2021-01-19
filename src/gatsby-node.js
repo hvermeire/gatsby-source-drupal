@@ -289,7 +289,7 @@ exports.sourceNodes = async (
             }
           }
 
-          url = getUriWithParam(url, { 'page[limit]': 2500 })
+          url = getUriWithParam(url, { 'page[limit]': 1024 })
 
           let d
           try {
