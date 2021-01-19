@@ -11,6 +11,18 @@ const {
 const asyncPool = require(`tiny-async-pool`)
 const bodyParser = require(`body-parser`)
 
+const getUriWithParam = (baseUrl, params) => {
+  const Url = new URL(baseUrl)
+  let urlParams = new URLSearchParams(Url.search)
+  for (const key in params) {
+    if (params[key] !== undefined) {
+      urlParams.set(key, params[key])
+    }
+  }
+  Url.search = urlParams.toString()
+  return Url.toString()
+}
+
 function gracefullyRethrow(activity, error) {
   // activity.panicOnBuild was implemented at some point in gatsby@2
   // but plugin can still be used with older version of gatsby core
@@ -276,6 +288,8 @@ exports.sourceNodes = async (
               }
             }
           }
+
+          url = getUriWithParam(url, { 'page[limit]': 2500 })
 
           let d
           try {
